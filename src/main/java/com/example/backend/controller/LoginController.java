@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.*;
 public class LoginController {
 
     private final AuthService authService;
-    private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
-
 
     @Autowired
     public LoginController(AuthService authService) {
@@ -26,13 +24,10 @@ public class LoginController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
         boolean success = authService.authenticate(loginRequest.getUsername(), loginRequest.getPassword());
-        logger.info("Checking...");
 
         if(success){
-            logger.info("Login successful for user");
             return ResponseEntity.ok("Login successful!");
         } else {
-            logger.info("Failed...");
             return ResponseEntity.status(401).body("Invalid usernamne or password");
         }
     }
